@@ -17,7 +17,7 @@ namespace MyString.Format.Tests
 		[TestCase("{2147483647: : \n}", int.MaxValue, 0, " : \n")]
 
 		[TestCase("{0,0:abc}", 0, 0, "abc")]
-		[TestCase("{1,3:}", 1, 3, null)]
+		[TestCase("{010,3:}", 10, 3, null)]
 		[TestCase("{2147483647,2147483647:,:,}", int.MaxValue, int.MaxValue, ",:,")]
 		public void NormalCaseTest(string format, int expectArgumentIndex, int expectAlignment, string expectFormatString)
 			=> Assert.That(
