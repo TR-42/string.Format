@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Project Sdk="Microsoft.NET.Sdk">
 	<PropertyGroup>
-		<TargetFramework>netstandard1.0</TargetFramework>
-		<TargetFrameworks Condition="$([MSBuild]::IsOSPlatform('windows'))">$(TargetFramework);net11</TargetFrameworks>
+		<TargetFramework Condition="!$([MSBuild]::IsOSPlatform('windows'))">netstandard1.0</TargetFramework>
+		<TargetFramework Condition="$([MSBuild]::IsOSPlatform('windows'))">net11</TargetFramework>
 		<LangVersion>1.0</LangVersion>
 		<RootNamespace>TR</RootNamespace>
 	</PropertyGroup>
