@@ -100,6 +100,7 @@ namespace TR
 				throw new FormatException("Alignment must have one value (You must put a number after a comma)");
 		}
 
+		#region Equals() and GetHashCode()
 		public override bool Equals(object obj)
 		{
 			if (object.ReferenceEquals(this, obj))
@@ -121,5 +122,6 @@ namespace TR
 
 			return this.ArgumentIndex.GetHashCode() ^ this.Alignment.GetHashCode() ^ formatStringHashCode;
 		}
+		#endregion
 	}
 }
