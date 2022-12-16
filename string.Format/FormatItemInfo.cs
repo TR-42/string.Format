@@ -76,6 +76,8 @@ namespace TR
 					this.FormatString = unparsedString;
 				}
 			}
+			else if (!isAlignmentAlreadyParsed)
+				throw new FormatException("Alignment must have one value (You must put a number after a comma)");
 		}
 
 		public override bool Equals(object obj)
