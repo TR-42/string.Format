@@ -7,6 +7,11 @@ namespace TR
 		const char ALIGNMENT_SEPARATE_CHAR = ',';
 		const char FORMAT_STRING_SEPARATE_CHAR = ':';
 
+		const int ARG_INDEX_MEANING_OF_ESCAPE_OPEN_BRACE = -1;
+		const int ARG_INDEX_MEANING_OF_ESCAPE_CLOSE_BRACE = -2;
+		const char OPEN_BRACE = '{';
+		const char CLOSE_BRACE = '}';
+
 		public readonly int ArgumentIndex;
 		public readonly int Alignment;
 		public readonly string FormatString;
@@ -20,6 +25,19 @@ namespace TR
 
 		public FormatItemInfo(string format, FormatItemSegment segment)
 		{
+			if (segment.Length == 2)
+			{
+				char char1 = format[segment.StartIndex];
+				char char2 = format[segment.StartIndex + 1];
+
+				if (char1 == OPEN_BRACE && char2 == OPEN_BRACE)
+					this.ArgumentIndex = ARG_INDEX_MEANING_OF_ESCAPE_OPEN_BRACE;
+				else if (char1 == CLOSE_BRACE && char2 == CLOSE_BRACE)
+					this.ArgumentIndex = ARG_INDEX_MEANING_OF_ESCAPE_CLOSE_BRACE;
+				else
+					throw new ArgumentException("the string is not escaping a brace");
+			}
+
 			bool isIndexAlreadyParsed = false;
 			bool isAlignmentAlreadyParsed = false;
 
