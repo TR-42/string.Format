@@ -5,7 +5,7 @@ namespace MyString.Format.Tests
 	public class FormatItemSegmentTests
 	{
 		[TestCase(0, 16)]
-		[TestCase(0, 3)]
+		[TestCase(0, 2)]
 		[TestCase(0, int.MaxValue)]
 		[TestCase(int.MaxValue - 3, 3)]
 		public void NormalCaseTest(int StartIndex, int Length)
@@ -22,9 +22,8 @@ namespace MyString.Format.Tests
 		[TestCase(0, -1)]
 		[TestCase(0, 0)]
 		[TestCase(0, 1)]
-		[TestCase(0, 2)]
 		public void LengthOutOfRangeTests(int StartIndex, int Length)
-			=> Tester<ArgumentOutOfRangeException>(StartIndex, Length, "must be same or more than 3 (Open Brace, Index Number, and Close Brace) (Parameter 'Length')");
+			=> Tester<ArgumentOutOfRangeException>(StartIndex, Length, "must be same or more than 2 (Parameter 'Length')");
 
 		[TestCase(1, int.MaxValue)]
 		[TestCase(int.MaxValue - 2, 3)]

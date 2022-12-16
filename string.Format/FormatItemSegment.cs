@@ -11,8 +11,8 @@ namespace TR
 		{
 			if (StartIndex < 0)
 				throw new ArgumentOutOfRangeException("StartIndex", "must be positive");
-			if (Length < 3)
-				throw new ArgumentOutOfRangeException("Length", "must be same or more than 3 (Open Brace, Index Number, and Close Brace)");
+			if (Length < 2)
+				throw new ArgumentOutOfRangeException("Length", "must be same or more than 2");
 			if ((int.MaxValue - Length) < StartIndex)
 				throw new OverflowException("`StartIndex + Length` will overflow with given values");
 
