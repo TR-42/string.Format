@@ -46,6 +46,8 @@ namespace TR
 							break;
 						}
 					}
+					else if (!char.IsDigit(currentChar))
+						throw new FormatException("You must use only digit in the `ArgumentIndex` segment");
 				}
 				else if (currentChar == FORMAT_STRING_SEPARATE_CHAR)
 				{
