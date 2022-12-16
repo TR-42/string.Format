@@ -24,5 +24,22 @@ namespace MyString.Format.Tests
 				new TR.FormatItemInfo(format, new(0, format.Length)),
 				Is.EqualTo(new TR.FormatItemInfo(expectArgumentIndex, expectAlignment, expectFormatString))
 			);
+
+		[TestCase("{-1}")]
+		[TestCase("{-214738648}")]
+		[TestCase("{0xFF}")]
+		public void ArgumentIndexInvalidCharTest(string format)
+			=> Tester<FormatException>(format, "You must use only digit in the `ArgumentIndex` segment");
+
+		[TestCase("{0,}")]
+		[TestCase("{10,:}")]
+		public void AlignmentEmptyTest(string format)
+			=> Tester<FormatException>(format, "Alignment must have one value (You must put a number after a comma)");
+
+		static void Tester<T>(string format, string message) where T : Exception
+			=> Assert.That(
+				() => new TR.FormatItemInfo(format, new(0, format.Length)),
+				Throws.InstanceOf<T>().And.Message.EqualTo(message)
+			);
 	}
 }
