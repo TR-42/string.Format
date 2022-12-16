@@ -1,4 +1,5 @@
 using System;
+using System.Reflection;
 
 namespace TR
 {
@@ -11,6 +12,8 @@ namespace TR
 		const int ARG_INDEX_MEANING_OF_ESCAPE_CLOSE_BRACE = -2;
 		const char OPEN_BRACE = '{';
 		const char CLOSE_BRACE = '}';
+		const string OPEN_BRACE_STR = "{";
+		const string CLOSE_BRACE_STR = "}";
 
 		public readonly int ArgumentIndex;
 		public readonly int Alignment;
@@ -99,6 +102,146 @@ namespace TR
 			else if (!isAlignmentAlreadyParsed)
 				throw new FormatException("Alignment must have one value (You must put a number after a comma)");
 		}
+
+		private string ApplyAlignment(string str)
+		{
+			int absAlignment = Math.Abs(this.Alignment);
+
+			return this.Alignment < 0
+				? str.PadRight(absAlignment)
+				: str.PadLeft(absAlignment);
+		}
+
+		// Alignmentはまだ適用しない
+		internal string ObjToString(object obj, IFormatProvider formatProvider)
+		{
+			if (obj == null)
+				return string.Empty;
+
+			if (IsAssignableTo(obj, typeof(ICustomFormatter)))
+			{
+				ICustomFormatter customFormatter = (ICustomFormatter)obj;
+
+				string result = customFormatter.Format(this.FormatString, obj, formatProvider);
+
+				if (result != null)
+					return result;
+			}
+
+			if (IsAssignableTo(obj, typeof(IFormattable)))
+			{
+				IFormattable formattable = (IFormattable)obj;
+
+				string result = formattable.ToString(this.FormatString, formatProvider);
+
+				if (result != null)
+					return result;
+			}
+
+			string toStringResult = obj.ToString();
+
+			return toStringResult == null ? string.Empty : toStringResult;
+		}
+
+		static bool IsAssignableTo(object obj, Type typeToAssignTo)
+		{
+#if NETSTANDARD2_0_OR_GREATER || NETFRAMEWORK
+			return typeToAssignTo.IsAssignableFrom(obj.GetType());
+#else
+			return typeToAssignTo.GetTypeInfo().IsAssignableFrom(obj.GetType().GetTypeInfo());
+#endif
+		}
+
+		#region Format
+		public string Format(object arg0)
+		{
+			return FormatWithFormatProvider(null, arg0);
+		}
+		public string Format(object arg0, object arg1)
+		{
+			return FormatWithFormatProvider(null, arg0, arg1);
+		}
+		public string Format(object arg0, object arg1, object arg2)
+		{
+			return FormatWithFormatProvider(null, arg0, arg1, arg2);
+		}
+		public string Format(object[] args)
+		{
+			return FormatWithFormatProvider(null, args);
+		}
+
+		public string FormatWithFormatProvider(IFormatProvider formatProvider, object arg0)
+		{
+			switch (this.ArgumentIndex)
+			{
+				case ARG_INDEX_MEANING_OF_ESCAPE_OPEN_BRACE:
+					return OPEN_BRACE_STR;
+				case ARG_INDEX_MEANING_OF_ESCAPE_CLOSE_BRACE:
+					return CLOSE_BRACE_STR;
+
+				case 0:
+					return ApplyAlignment(ObjToString(arg0, formatProvider));
+
+				default:
+					throw new IndexOutOfRangeException("The specified Index is out of range of the given arguments");
+			}
+		}
+		public string FormatWithFormatProvider(IFormatProvider formatProvider, object arg0, object arg1)
+		{
+			switch (this.ArgumentIndex)
+			{
+				case ARG_INDEX_MEANING_OF_ESCAPE_OPEN_BRACE:
+					return OPEN_BRACE_STR;
+				case ARG_INDEX_MEANING_OF_ESCAPE_CLOSE_BRACE:
+					return CLOSE_BRACE_STR;
+
+				case 0:
+					return ApplyAlignment(ObjToString(arg0, formatProvider));
+				case 1:
+					return ApplyAlignment(ObjToString(arg1, formatProvider));
+
+				default:
+					throw new IndexOutOfRangeException("The specified Index is out of range of the given arguments");
+			}
+		}
+		public string FormatWithFormatProvider(IFormatProvider formatProvider, object arg0, object arg1, object arg2)
+		{
+			switch (this.ArgumentIndex)
+			{
+				case ARG_INDEX_MEANING_OF_ESCAPE_OPEN_BRACE:
+					return OPEN_BRACE_STR;
+				case ARG_INDEX_MEANING_OF_ESCAPE_CLOSE_BRACE:
+					return CLOSE_BRACE_STR;
+
+				case 0:
+					return ApplyAlignment(ObjToString(arg0, formatProvider));
+				case 1:
+					return ApplyAlignment(ObjToString(arg1, formatProvider));
+				case 2:
+					return ApplyAlignment(ObjToString(arg2, formatProvider));
+
+				default:
+					throw new IndexOutOfRangeException("The specified Index is out of range of the given arguments");
+			}
+		}
+
+		public string FormatWithFormatProvider(IFormatProvider formatProvider, object[] args)
+		{
+			switch (this.ArgumentIndex)
+			{
+				case ARG_INDEX_MEANING_OF_ESCAPE_OPEN_BRACE:
+					return OPEN_BRACE_STR;
+				case ARG_INDEX_MEANING_OF_ESCAPE_CLOSE_BRACE:
+					return CLOSE_BRACE_STR;
+
+				default:
+					if (args.Length <= this.ArgumentIndex)
+						throw new IndexOutOfRangeException("The specified Index is out of range of the given arguments");
+
+					return ApplyAlignment(ObjToString(args[this.ArgumentIndex], formatProvider));
+			}
+		}
+		#endregion
 
 		#region Equals() and GetHashCode()
 		public override bool Equals(object obj)
