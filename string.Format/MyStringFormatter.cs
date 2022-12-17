@@ -116,8 +116,13 @@ namespace TR
 			FormatProvider = formatProvider;
 			FormatItemSegmentArray = GetFormatItemSegments(format, numOfFormatItemAndEscapingBrace);
 
-			foreach (FormatItemSegment v in FormatItemSegmentArray)
+			for (int i = 0; i < FormatItemSegmentArray.Length; i++)
+			{
+				FormatItemSegment v = FormatItemSegmentArray[i];
+
+				FormatItemInfoArray[i] = new FormatItemInfo(format, v);
 				SumOfFormatItemSegmentLength += v.Length;
+			}
 		}
 
 		internal int GetOutputLength(string[] formatItemStrings)
