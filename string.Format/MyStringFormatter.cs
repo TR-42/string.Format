@@ -91,7 +91,7 @@ namespace TR
 					}
 					else
 					{
-						segments[segmentIndex++] = new FormatItemSegment(indexOfFormatItemBeginBrace, i - indexOfFormatItemBeginBrace);
+						segments[segmentIndex++] = new FormatItemSegment(indexOfFormatItemBeginBrace, i - indexOfFormatItemBeginBrace + 1);
 						indexOfFormatItemBeginBrace = INDEX_NO_VALUE;
 					}
 				}
