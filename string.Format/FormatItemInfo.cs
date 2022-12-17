@@ -243,7 +243,12 @@ namespace TR
 		}
 		#endregion
 
-		#region Equals() and GetHashCode()
+		#region ToString(), Equals() and GetHashCode()
+		public override string ToString()
+		{
+			return "FormatItemInfo{" + ArgumentIndex + ',' + Alignment + ':' + FormatString + '}';
+		}
+
 		public override bool Equals(object obj)
 		{
 			if (object.ReferenceEquals(this, obj))
