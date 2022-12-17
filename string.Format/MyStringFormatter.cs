@@ -116,6 +116,7 @@ namespace TR
 			FormatProvider = formatProvider;
 			FormatItemSegmentArray = GetFormatItemSegments(format, numOfFormatItemAndEscapingBrace);
 
+			FormatItemInfoArray = new FormatItemInfo[FormatItemSegmentArray.Length];
 			for (int i = 0; i < FormatItemSegmentArray.Length; i++)
 			{
 				FormatItemSegment v = FormatItemSegmentArray[i];
