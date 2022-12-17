@@ -4,6 +4,9 @@ namespace MyString.Format.Tests;
 
 public class FormatItemInfoTests
 {
+	[TestCase("{{", -1, 0, null)]
+	[TestCase("}}", -2, 0, null)]
+
 	[TestCase("{0}", 0, 0, null)]
 	[TestCase("{1}", 1, 0, null)]
 	[TestCase("{2147483647}", int.MaxValue, 0, null)]
