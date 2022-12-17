@@ -1,8 +1,8 @@
 using System;
 using System.Globalization;
 
-namespace MyString.Format.Tests
-{
+namespace MyString.Format.Tests;
+
 public class FormatItemInfo_ObjToStringTests
 {
 	[TestCase("D", 123, "123")]
@@ -24,5 +24,4 @@ public class FormatItemInfo_ObjToStringTests
 			new TR.FormatItemInfo(0, 0, formatString).ObjToString(obj, CultureInfo.CreateSpecificCulture("en-US")),
 			Is.EqualTo(expected)
 		);
-}
 }

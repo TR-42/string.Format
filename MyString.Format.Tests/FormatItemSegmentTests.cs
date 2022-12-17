@@ -1,7 +1,7 @@
 using System;
 
-namespace MyString.Format.Tests
-{
+namespace MyString.Format.Tests;
+
 public class FormatItemSegmentTests
 {
 	[TestCase(0, 16)]
@@ -36,5 +36,4 @@ public class FormatItemSegmentTests
 			() => new TR.FormatItemSegment(StartIndex, Length),
 			Throws.InstanceOf<T>().And.Message.EqualTo(message)
 		);
-}
 }

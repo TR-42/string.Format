@@ -1,7 +1,7 @@
 using System;
 
-namespace MyString.Format.Tests
-{
+namespace MyString.Format.Tests;
+
 public class FormatItemInfoTests
 {
 	[TestCase("{0}", 0, 0, null)]
@@ -41,5 +41,4 @@ public class FormatItemInfoTests
 			() => new TR.FormatItemInfo(format, new(0, format.Length)),
 			Throws.InstanceOf<T>().And.Message.EqualTo(message)
 		);
-}
 }
