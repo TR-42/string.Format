@@ -39,6 +39,8 @@ namespace TR
 					this.ArgumentIndex = ARG_INDEX_MEANING_OF_ESCAPE_CLOSE_BRACE;
 				else
 					throw new ArgumentException("the string is not escaping a brace");
+
+				return;
 			}
 
 			bool isIndexAlreadyParsed = false;
