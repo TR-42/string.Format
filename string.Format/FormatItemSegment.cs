@@ -19,5 +19,32 @@ namespace TR
 			this.StartIndex = StartIndex;
 			this.Length = Length;
 		}
+
+		#region ToString(), Equals() and GetHashCode()
+		public override string ToString()
+		{
+			return "FormatItemSegment{ StartIndex:" + StartIndex + ", Length:" + Length + " }";
+		}
+
+		public override bool Equals(object obj)
+		{
+			if (object.ReferenceEquals(this, obj))
+				return true;
+
+			return this.Equals((FormatItemSegment)obj);
+		}
+
+		public bool Equals(FormatItemSegment v)
+		{
+			return (this.StartIndex == v.StartIndex)
+				&& (this.Length == v.Length);
+		}
+
+		public override int GetHashCode()
+		{
+			return this.StartIndex.GetHashCode() ^ this.StartIndex.GetHashCode();
+		}
+		#endregion
+
 	}
 }
