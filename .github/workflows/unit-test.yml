@@ -49,7 +49,7 @@ jobs:
         project:
           - string.Format
         framework:
-          - net11
+          - net20
 
     steps:
       - uses: actions/checkout@v3
